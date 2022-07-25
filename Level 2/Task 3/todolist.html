@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  cursor: context-menu;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+ul li:nth-child(odd) {
+  background: #c4a2a4;
+}
+
+ul li:hover {
+  background: rgb(172, 113, 113);
+}
+
+ul li.checked {
+  color: rgb(249, 219, 219);
+  text-decoration: line-through;
+  color: #000;
+  text-decoration-color: #555;
+}
+
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0 2px 2px 0;
+  top: 10px;
+  left: 16px;
+  transform: rotate(45deg);
+  height: 15px;
+  width: 7px;
+}
+
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+}
+
+.close:hover {
+  background-color: #a1bbcd;
+  color: white;
+}
+
+.header {
+  background-color: #37a496;
+  padding: 30px 40px;
+  color: white;
+  text-align: center;
+  text-decoration: wavy;
+}
+
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+input {
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  width: 75%;
+  padding: 10px;
+  float: left;
+  font-size: 16px;
+}
+
+.add {
+  padding: 10px;
+  width: 25%;
+  background: #d9d9d9;
+  color: #555;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+.add:hover {
+  background-color: #bbb;
+}
+</style>
+</head>
+<body style="margin: 10;">
+
+<div id="div" class="header">
+  <b><u><h2 style="margin:5px;">My To Do List</h2></u></b>
+  <hr><br>
+  <input type="text" id="input" placeholder="Add title...">
+  <span onclick="newele()" class="add">Add</span>
+</div>
+
+<ul id="list">
+  <li>6 a.m.: Wake up, brush teeth, and shower</li>
+  <li>6:30 a.m.: Breakfast</li>
+  <li class="checked">7 a.m.: Leave the house</li>
+  <li>7:15 a.m.: Drop off the kids at school</li>
+  <li>7:30 a.m.: Arrive at the office</li>
+</ul>
+
+<script>
+var myList = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < myList.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myList[i].appendChild(span);
+}
+
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+var list = document.querySelector('ul');
+list.addEventListener('click', function(ev) {
+  if (ev.target.tagName === 'LI') {
+    ev.target.classList.toggle('checked');
+  }
+}, false);
+
+function newele() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("input").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("Please enter valid value!!");
+  } else {
+    document.getElementById("list").appendChild(li);
+  }
+  document.getElementById("input").value = "";
+
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script>
+</body>
+</html>
